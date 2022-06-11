@@ -1,10 +1,11 @@
+require('dotenv').config()
+
 const config = {
     mongoDB: {
-        url: 'mongodb+srv://Cecilia:ceci1984@cluster1.sf6kh.mongodb.net/?retryWrites=true&w=majority',
+        url: process.env.MONGO_URL,
         options: {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-            //useCreateIndex: true,
         }
     }
 }

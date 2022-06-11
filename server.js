@@ -1,14 +1,4 @@
-/* 
-npm init -y
-npm i express
-npm i express socket.io
-npm i ejs
-npm i express-session
-npm i connect-mongo --save
-npm i passport
-npm i passport-local
-npm i mongoose
-*/
+/*Desafio 12:  Usando el objeto process */
 const express = require('express')
 const session = require('express-session')
 const {usuarioReg, model}  = require('./controller/usuariosMongoDB')
@@ -19,6 +9,12 @@ const { Strategy: LocalStrategy } = require('passport-local')
 
 const MongoStore = require('connect-mongo')
 const advancedOptins = { useNewUrlParser: true, useUnifiedTopology: true }
+
+/* Yargs */
+const args = require('./src/yargs')
+const apiInfo = require('./routes/apiInfo')
+/* Process */
+const apiRandom = require('./routes/apiRandom')
 
 /* database */
 const usuarios = []
@@ -148,9 +144,12 @@ app.post('/logout', (req, res) => {
       })
 })
 
-const PORT = process.env.PORT || 8080
+app.use(apiInfo)
+app.use(apiRandom)
+
+const PORT = args.port
 
 const srv = server.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${srv.address().port}`)
+    console.log(`Servidor escuchando en el puerto ${PORT}`)
 })
 srv.on('error', error => console.log(`Error en el servidor ${error}`))
